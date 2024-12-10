@@ -1,0 +1,597 @@
+
+penapi: 3.0.0
+info:
+  title: Campaign and Ad Management API
+  version: 1.0.0
+  description: API for managing users, sponsors, influencers, ad requests, and campaigns.
+servers:
+  - url: /api
+
+paths:
+  /users:
+    get:
+      summary: Get all users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Error fetching users
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Failed to create user
+
+  /users/{user_id}:
+    get:
+      summary: Get a specific user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Error fetching user details
+    put:
+      summary: Update a specific user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: User not found
+        '500':
+          description: Error updating user
+    delete:
+      summary: Delete a specific user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted successfully
+        '404':
+          description: User not found
+        '500':
+          description: Error deleting user
+
+  /sponsors:
+    get:
+      summary: Get all sponsors
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of sponsors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '500':
+          description: Error fetching sponsors
+    post:
+      summary: Create a new sponsor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sponsor'
+      responses:
+        '201':
+          description: Sponsor created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Failed to create sponsor
+
+  /sponsors/{sponsor_id}:
+    get:
+      summary: Get a specific sponsor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sponsor_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sponsor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sponsor'
+        '404':
+          description: Sponsor not found
+        '500':
+          description: Error fetching sponsor details
+    put:
+      summary: Update a specific sponsor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sponsor_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sponsor'
+      responses:
+        '200':
+          description: Sponsor updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Sponsor not found
+        '500':
+          description: Error updating sponsor
+    delete:
+      summary: Delete a specific sponsor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sponsor_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sponsor deleted successfully
+        '404':
+          description: Sponsor not found
+        '500':
+          description: Error deleting sponsor
+
+  /influencers:
+    get:
+      summary: Get all influencers
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of influencers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Influencer'
+        '500':
+          description: Error fetching influencers
+    post:
+      summary: Create a new influencer
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Influencer'
+      responses:
+        '201':
+          description: Influencer created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Failed to create influencer
+
+  /influencers/{influencer_id}:
+    get:
+      summary: Get a specific influencer
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: influencer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Influencer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Influencer'
+        '404':
+          description: Influencer not found
+        '500':
+          description: Error fetching influencer details
+    put:
+      summary: Update a specific influencer
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: influencer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Influencer'
+      responses:
+        '200':
+          description: Influencer updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Influencer not found
+        '500':
+          description: Error updating influencer
+    delete:
+      summary: Delete a specific influencer
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: influencer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Influencer deleted successfully
+        '404':
+          description: Influencer not found
+        '500':
+          description: Error deleting influencer
+
+  /ad_requests:
+    get:
+      summary: Get all ad requests
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of ad requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdRequest'
+        '500':
+          description: Error fetching ad requests
+    post:
+      summary: Create a new ad request
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdRequest'
+      responses:
+        '201':
+          description: Ad request created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Failed to create ad request
+
+  /ad_requests/{ad_request_id}:
+    get:
+      summary: Get a specific ad request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ad_request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ad request details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdRequest'
+        '404':
+          description: Ad request not found
+        '500':
+          description: Error fetching ad request details
+    put:
+      summary: Update a specific ad request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ad_request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdRequest'
+      responses:
+        '200':
+          description: Ad request updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Ad request not found
+        '500':
+          description: Error updating ad request
+    delete:
+      summary: Delete a specific ad request
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ad_request_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ad request deleted successfully
+        '404':
+          description: Ad request not found
+        '500':
+          description: Error deleting ad request
+
+  /campaigns:
+    get:
+      summary: Get all campaigns
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of campaigns
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Campaign'
+        '500':
+          description: Error fetching campaigns
+    post:
+      summary: Create a new campaign
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Campaign'
+      responses:
+        '201':
+          description: Campaign created successfully
+        '400':
+          description: Invalid input
+        '500':
+          description: Failed to create campaign
+
+  /campaigns/{campaign_id}:
+    get:
+      summary: Get a specific campaign
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Campaign details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+        '404':
+          description: Campaign not found
+        '500':
+          description: Error fetching campaign details
+    put:
+      summary: Update a specific campaign
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Campaign'
+      responses:
+        '200':
+          description: Campaign updated successfully
+        '400':
+          description: Invalid input
+        '404':
+          description: Campaign not found
+        '500':
+          description: Error updating campaign
+    delete:
+      summary: Delete a specific campaign
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: campaign_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Campaign deleted successfully
+        '404':
+          description: Campaign not found
+        '500':
+          description: Error deleting campaign
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        active:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
+
+    Sponsor:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        company_name:
+          type: string
+        budget:
+          type: number
+        campaigns:
+          type: array
+          items:
+            type: integer
+
+    Influencer:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        niche:
+          type: string
+
+    AdRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        campaign_id:
+          type: integer
+        sender_id:
+          type: integer
+        receiver_id:
+          type: integer
+        message:
+          type: string
+        requirements:
+          type: string
+        payment_amount:
+          type: number
+        status:
+          type: string
+
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        niche:
+          type: string
+        budget:
+          type: number
+        goals:
+          type: string
+        creator_id:
+          type: integer
+
